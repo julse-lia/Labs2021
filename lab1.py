@@ -17,24 +17,24 @@ t_i = [912, 2981, 2048, 1268, 1879, 381, 1855,
         960, 1288, 1074, 109, 88, 430, 1672, 2224,
         427, 277, 1175, 863, 672, 1426, 199, 603,
         1337, 258, 818, 138]
+
+
 # Сортована вибірка
 sorted_t_i = sorted(t_i)
 
 # Кількість об'єктів вибірки
+
 N = len(sorted_t_i)
 
 # Середній наробіток T_cp
-try:
-    T_cp = sum(t_i)/N
-    print("Середній наробіток: T_cp = " + str(T_cp))
-except ZeroDivisionError:
-    print("Division by zero")
+
+T_cp = sum(t_i)/N
+print("Середній наробіток: T_cp = " + str(T_cp))
 
 # Розмах вибірки h
-try:
-    max_t_i = max(t_i)
-except ValueError:
-    print("List is empty.")
+
+max_t_i = max(t_i)
+
 h = max_t_i / 10
 
 count =[[] for i in range(10)]
@@ -66,14 +66,20 @@ def recsum(num_list):
 # Значення ймовірності безвідмовної роботи пристрою на час правої границі
 # для кожного інтервалу P_t
 S_i = [recsum(f_i[:(i+1)])*h for i in range(len(f_i))]
-
+P_t0 = 1
 P_t = [round((1 - i), 6) for i in S_i]
+P_t.insert(0, P_t0)
 
 # γ-відсотковий наробіток на відмову T_y
-try:
-    d = round((1 - y)/(1 - P_t[0]), 2)
-except ZeroDivisionError:
-    print("Division by zero.")
+def d_for_interval(P_t_i_1, P_t_i):
+    try:
+        d = round((P_t_i_1 - y)/(P_t_i_1 - P_t_i), 2)
+        return d
+    except ZeroDivisionError:
+        print("Division by zero.")
+print(P_t)
+# Для нульового інтервалу 
+d = d_for_interval(P_t[0], P_t[1])
 
 T_y = round(h * d, 2)
 print("γ-відсотковий наробіток на відмову: T_y = " + str(T_y) + " при γ = " + str(y))
