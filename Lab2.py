@@ -17,7 +17,7 @@ p = {1: 0.59,  # input system objects list probabilities
      4: 0.22,
      5: 0.70
      }
-elements = range(1, len(p)+1) # system objects list
+elements = range(1, len(p)+1)  # system objects list
 
 G = {1: {2, 3},   # input graph
      2: {4},
@@ -25,20 +25,20 @@ G = {1: {2, 3},   # input graph
      4: {5},
      5: {5}
     }
+sources = [1]  # input your source nodes
+ends = [5]     # input your end nodes
 
 pos_states = []
-for i in range(1,len(elements)+1):
+for i in range(1, len(elements)+1):
     pos_states += list(itertools.combinations(elements, i))
+
 
 if len(G) == 0:
     print("P_системи = 0")
 elif len(G) == 1:
     print("P_системи = ", + p[list(p.keys())[0]])
 else:
-    paths = []  # список усіх знайдених шляхів
-
-    sources = [1]  # input your source nodes
-    ends = [5]     # input your end nodes
+    paths = []
 
     for i in list(product(sources, ends)):
         for j in list(dfs_paths(G, i[0], i[1])):
@@ -64,6 +64,3 @@ else:
     # ймовірність безвідмовної роботи системи
     p_system = sum(p_states)
     print('P_системи =',round(p_system, 6))
-
-
-
