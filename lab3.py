@@ -112,11 +112,8 @@ def P_reserved_system(linkway, mode, K, Q_system):
     if linkway == 'general':
         if mode == 'unloaded':
             return 1 - (1 / math.factorial(K + 1)) * Q_system
-        elif mode =='loaded':
-            total = 1
-            for i in p:
-                total = total * p[i]
-            return 1 - pow(1 - total, K + 1)
+        elif mode == 'loaded':
+            return 1 - pow(Q_system, K + 1)
     elif linkway == 'distributed':
         P_reserved_i = {}
         if mode == 'unloaded':
@@ -167,4 +164,3 @@ def general_distributed(linkway, mode, time, K):
 
 if __name__ == '__main__':
     main()
-
